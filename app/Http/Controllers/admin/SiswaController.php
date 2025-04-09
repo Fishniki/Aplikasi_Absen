@@ -4,7 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Siswa;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SiswaController extends Controller
@@ -41,7 +43,7 @@ class SiswaController extends Controller
     }
 
     public function edit($id)
-    {   
+    {
         $siswa_byid = Siswa::findOrFail($id);
         return view('admin-view.edit-siswa', compact('siswa_byid'));
     }
@@ -74,8 +76,27 @@ class SiswaController extends Controller
 
     public function delete($id)
     {
+        // Ambil data siswa dulu
+        $siswa = Siswa::where('id', $id)->first();
+
+        if (!$siswa) {
+            return back()->with('error', 'Data siswa tidak ditemukan.');
+        }
+
+        // Hapus user
+        User::where('id', $siswa->user_id)->delete();
+
+        // Hapus siswa
         Siswa::where('id', $id)->delete();
-        return redirect()->route('admin.data-siswa', ['kelas' => 'All', 'jurusan' => 'All'])
-        ->with('success', 'Data siswa berhasil dihapus.');
+
+        // hapus foto profile
+        if ($siswa->image && Storage::disk('public')->exists($siswa->image)) {
+            Storage::disk('public')->delete($siswa->image);
+        }
+
+        return redirect()->route('admin.data-siswa', ['kelas_jurusan' => 'All'])
+            ->with('success', 'Data siswa berhasil dihapus.');
     }
+
+
 }

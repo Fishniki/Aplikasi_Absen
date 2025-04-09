@@ -8,13 +8,18 @@
                 <a href="{{ route('user.profile-edit', $siswa_byuser_id) }}">Edit Profile</a>
             </button>
         </div>
+            @if (@session('error'))
+                <p class="px-3 py-2 bg-red-200 text-red-500 border border-red-500 mb-3">{{ session('error') }}</p>
+            @elseif (@session('success'))
+                <p class="px-3 py-2 bg-green-200 text-green-500 border border-green-500 mb-3">{{ session('success') }}</p>
+            @endif
         <div class="bg-white shadow-md rounded-xl overflow-hidden p-6">
             <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
                 <!-- Profile Image -->
                 <div class="w-40 h-40 shrink-0">
-                    <img 
-                        src="{{ asset('storage/' . $siswa_byuser_id->image) }}" 
-                        alt="Foto Profil" 
+                    <img
+                        src="{{ asset('storage/' . $siswa_byuser_id->image) }}"
+                        alt="Foto Profil"
                         class="w-full h-full object-cover rounded-xl shadow-sm border border-gray-200"
                     >
                 </div>
