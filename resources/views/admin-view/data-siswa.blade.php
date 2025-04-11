@@ -31,6 +31,7 @@
           <table class="w-full max-w-2xl bg-white shadow-md rounded-xl overflow-hidden">
               <thead class="bg-sky-700 text-white text-sm uppercase font-semibold">
                 <tr>
+                  <th class="px-6 py-3 text-left">Image</th>
                   <th class="px-6 py-3 text-left">NIS</th>
                   <th class="px-6 py-3 text-left">Nama</th>
                   <th class="px-6 py-3 text-left">Kelas</th>
@@ -40,6 +41,15 @@
               <tbody class="text-gray-600 divide-y divide-gray-200">
                   @forelse ($data_siswa as $data)
                   <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4">
+                          <div class="w-10 h-10 rounded-full overflow-hidden">
+                              <img
+                                  src="{{ asset('storage/' . $data->image) }}"
+                                  alt=""
+                                  class="w-full h-full object-cover">
+                          </div>
+                        </td>
+                        
                         <td class="px-6 py-4">{{ $data->nis }}</td>
                         <td class="px-6 py-4">{{ $data->name }}</td>
                         <td class="px-6 py-4">{{ $data->kelas }} {{ $data->jurusan }}</td>

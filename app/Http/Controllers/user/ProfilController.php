@@ -14,18 +14,29 @@ class ProfilController extends Controller
 {
     public function index($id)
     {
+        if(Auth::user()->id != $id){
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk melihat halaman tersebut.');
+            abort(403, 'Akses ditolak.');
+        }
         $siswa_byuser_id = Siswa::where('user_id', $id)->first();
         return view('profile-user', compact('siswa_byuser_id'));
     }
 
     public function edit($id)
     {
+        if (Auth::id() != $id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk melihat halaman tersebut.');
+        }
         $siswa_byuser_id = Siswa::where('user_id', $id)->first();
         return view('profile-user-edit', compact('siswa_byuser_id'));
     }
 
     public function saveChanges(Request $request, $id)
     {
+        if (Auth::id() != $id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk melihat halaman tersebut.');
+        }
+
         $validator = Validator::make($request->all(), [
             'nis' => 'required|numeric',
             'nama' => 'required|string',

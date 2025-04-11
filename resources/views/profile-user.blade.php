@@ -5,7 +5,7 @@
     <div class="max-w-4xl mx-auto px-4 py-8">
         <div class="w-full flex justify-end mb-5">
             <button class="px-3 py-2 bg-sky-700 text-white rounded-lg font-medium">
-                <a href="{{ route('user.profile-edit', $siswa_byuser_id) }}">Edit Profile</a>
+                <a href="{{ route('user.profile-edit', Auth::user()->id) }}">Edit Profile</a>
             </button>
         </div>
             @if (@session('error'))

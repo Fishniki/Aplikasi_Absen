@@ -3,7 +3,7 @@
 
     <div class="w-full max-w-xl p-5 px-10 mx-5 mt-10  rounded-lg shadow-md">
         {{-- <p>{{ \Carbon\Carbon::now()->translatedFormat('l, d F Y ') }}</p> --}}
-        <form action="{{ route('user.profile-update', $siswa_byuser_id->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('user.profile-update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-4">

@@ -16,8 +16,7 @@ flex-col" :class="open ? 'w-64' : 'w-auto items-center'">
         <x-admin-sidebar-link href="/admin/dashboard" icon="bi bi-house"  :active="request()->routeIs('admin.dashboard')">Dashboard</x-admin-sidebar-link>
         <x-admin-sidebar-link href="/admin/data-siswa" icon="bi bi-person"  :active="request()->routeIs('admin.data-siswa')">Data Siswa</x-admin-sidebar-link>
         <x-admin-sidebar-link href="/admin/absen-siswa" icon="bi bi-calendar-event"  :active="request()->routeIs('admin.absen-siswa')">Absen Siswa</x-admin-sidebar-link>
-
-
-
+        <x-admin-sidebar-link href="/admin/data-pengguna" icon="bi bi-people"  :active="request()->routeIs('admin.data-pengguna')">Pengguna</x-admin-sidebar-link>
+        <x-admin-sidebar-link href="/admin/logout" icon="bi bi-box-arrow-left"  :active="request()->routeIs('admin.logout')">Keluar</x-admin-sidebar-link>
     </nav>
 </div>
