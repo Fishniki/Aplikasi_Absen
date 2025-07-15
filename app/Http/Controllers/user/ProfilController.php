@@ -16,7 +16,7 @@ class ProfilController extends Controller
     {
         if(Auth::user()->id != $id){
             return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk melihat halaman tersebut.');
-            abort(403, 'Akses ditolak.');
+            // abort(403, 'Akses ditolak.');
         }
         $siswa_byuser_id = Siswa::where('user_id', $id)->first();
         return view('profile-user', compact('siswa_byuser_id'));
@@ -24,17 +24,30 @@ class ProfilController extends Controller
 
     public function edit($id)
     {
+        $profile = Siswa::where('user_id', $id)->first();
         if (Auth::id() != $id) {
             return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk melihat halaman tersebut.');
         }
+        
+        if($profile->lengkap === "sudah"){
+            return redirect()->route('user.profile', $profile->user_id)->with('error', 'Profile anda suudah lengkap silahkan, hubungi guru jika ada kesalahan');
+        }
+
+
         $siswa_byuser_id = Siswa::where('user_id', $id)->first();
         return view('profile-user-edit', compact('siswa_byuser_id'));
     }
 
     public function saveChanges(Request $request, $id)
     {
-        if (Auth::id() != $id) {
+
+        $profil = Siswa::where('user_id', Auth::id())->first();
+        // echo $profil->user_id;
+
+        if ($profil->user_id != $id) {
             return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk melihat halaman tersebut.');
+        }elseif($profil->lengkap === "sudah"){
+            return redirect()->back()->with('error', 'Anda sudah melengkapi profil');
         }
 
         $validator = Validator::make($request->all(), [
@@ -70,6 +83,7 @@ class ProfilController extends Controller
         $siswa->kelas = $request->kelas;
         $siswa->jurusan = $request->jurusan;
         $siswa->jenis_kelamin = $request->jenis_kelamin;
+        $siswa->lengkap = "sudah";
         $siswa->save();
 
         return redirect()->route('user.profile', Auth::user()->id)

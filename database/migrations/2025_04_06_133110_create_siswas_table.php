@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use function Laravel\Prompts\table;
 
 return new class extends Migration
 {
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('kelas')->nullable();
             $table->string('jurusan')->nullable();
             $table->string('jenis_kelamin')->nullable();
+            $table->enum('lengkap', ['sudah','belum'])->default('belum');
             $table->timestamps();
         });
     }

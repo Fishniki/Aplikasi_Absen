@@ -4,9 +4,15 @@
 
     <div class="max-w-4xl mx-auto px-4 py-8">
         <div class="w-full flex justify-end mb-5">
-            <button class="px-3 py-2 bg-sky-700 text-white rounded-lg font-medium">
-                <a href="{{ route('user.profile-edit', Auth::user()->id) }}">Edit Profile</a>
-            </button>
+            @if ($siswa_byuser_id->lengkap === "sudah") 
+                <button class="px-3 py-2 bg-sky-700 text-white rounded-lg font-medium cursor-not-allowed" disabled>
+                    Profile
+                </button>
+            @else
+                <button class="px-3 py-2 bg-sky-700 text-white rounded-lg font-medium">
+                    <a href="{{ route('user.profile-edit', Auth::user()->id) }}">Edit Profile</a>
+                </button>
+            @endif
         </div>
             @if (@session('error'))
                 <p class="px-3 py-2 bg-red-200 text-red-500 border border-red-500 mb-3">{{ session('error') }}</p>

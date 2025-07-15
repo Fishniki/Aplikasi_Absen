@@ -43,10 +43,10 @@ class AbsenController extends Controller
         }
 
         // Waktu absensi
-        $start = Carbon::createFromTime(6, 30, 0, 'Asia/Jakarta');
-        $end = Carbon::createFromTime(8, 0, 0, 'Asia/Jakarta');
-        $jam_terlambat = Carbon::createFromTime(7, 0, 0, 'Asia/Jakarta');
-        $jam_alpha = Carbon::createFromTime(7, 30, 0, 'Asia/Jakarta');
+        // $start = Carbon::createFromTime(6, 30, 0, 'Asia/Jakarta');
+        // $end = Carbon::createFromTime(8, 0, 0, 'Asia/Jakarta');
+        // $jam_terlambat = Carbon::createFromTime(7, 0, 0, 'Asia/Jakarta');
+        // $jam_alpha = Carbon::createFromTime(7, 30, 0, 'Asia/Jakarta');
 
         // Cek apakah sudah absen
         $sudah_absen = Absensi::where('siswa_id', $request->siswa_id)
@@ -57,7 +57,7 @@ class AbsenController extends Controller
             return back()->with('error', 'Anda sudah melakukan absensi hari ini.');
         }
 
-        if ($now->between($start, $end)) {
+        // if ($now->between($start, $end)) {
 
             // Validasi input
             $request->validate([
@@ -93,20 +93,20 @@ class AbsenController extends Controller
                 'bukti' => $bukti,
             ]);
 
-            return back()->with('success', 'Absensi berhasil dicatat.');
-        }
+        return back()->with('success', 'Absensi berhasil dicatat.');
+        // }
 
         // Absensi otomatis
-        $status_otomatis = $now->between($jam_terlambat, $jam_alpha) ? 'Terlambat' : 'Alfa';
+        // $status_otomatis = $now->between($jam_terlambat, $jam_alpha) ? 'Terlambat' : 'Alfa';
 
-        Absensi::create([
-            'siswa_id' => $request->siswa_id,
-            'kehadiran' => $status_otomatis,
-            'lokasi' => $request->lokasi ?? 'Otomatis oleh sistem',
-            'keterangan' => 'Absen otomatis oleh sistem',
-            'bukti' => null,
-        ]);
+        // Absensi::create([
+        //     'siswa_id' => $request->siswa_id,
+        //     'kehadiran' => $status_otomatis,
+        //     'lokasi' => $request->lokasi ?? 'Otomatis oleh sistem',
+        //     'keterangan' => 'Absen otomatis oleh sistem',
+        //     'bukti' => null,
+        // ]);
 
-        return back()->with('info', "Absensi otomatis tercatat sebagai $status_otomatis.");
+        // return back()->with('info', "Absensi otomatis tercatat sebagai $status_otomatis.");
     }
 }
